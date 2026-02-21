@@ -1,5 +1,5 @@
 import React from 'react';
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin, MessageCircle } from 'lucide-react';
+import { Instagram, Mail, MapPin, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
@@ -15,10 +15,7 @@ const Footer: React.FC = () => {
               We help businesses and professionals build modern, fast, and conversion-focused websites that attract customers and increase revenue.
             </p>
             <div className="flex space-x-4 mt-6">
-              <a href="#" className="text-gray-400 hover:text-brand-400 transition-colors"><Facebook size={20} /></a>
-              <a href="#" className="text-gray-400 hover:text-brand-400 transition-colors"><Twitter size={20} /></a>
-              <a href="#" className="text-gray-400 hover:text-brand-400 transition-colors"><Instagram size={20} /></a>
-              <a href="#" className="text-gray-400 hover:text-brand-400 transition-colors"><Linkedin size={20} /></a>
+              <a href="https://www.instagram.com/growmarq?igsh=bHZ4bTN2ZW1oN3Uz" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-brand-400 transition-colors"><Instagram size={20} /></a>
             </div>
           </div>
 
