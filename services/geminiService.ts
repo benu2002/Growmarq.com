@@ -1,14 +1,23 @@
 import { GoogleGenAI } from "@google/genai";
 
-// Initialize the Gemini API client
-// Note: In a real production app, you might proxy this through a backend to hide the key,
-// but for this frontend-only demo, we use the env variable directly as per instructions.
-const apiKey = process.env.API_KEY || ''; 
-const ai = new GoogleGenAI({ apiKey });
+// Initialize the Gemini API client lazily
+let ai: GoogleGenAI | null = null;
 
-export const generateBlogContent = async (topic: string, tone: string = 'professional'): Promise<string> => {
+const getAiClient = () => {
+  const apiKey = process.env.API_KEY || '';
   if (!apiKey) {
     console.error("API Key is missing.");
+    return null;
+  }
+  if (!ai) {
+    ai = new GoogleGenAI({ apiKey });
+  }
+  return ai;
+};
+
+export const generateBlogContent = async (topic: string, tone: string = 'professional'): Promise<string> => {
+  const client = getAiClient();
+  if (!client) {
     return "Error: API Key is missing. Please set the API_KEY environment variable.";
   }
 
@@ -22,7 +31,7 @@ export const generateBlogContent = async (topic: string, tone: string = 'profess
       Keep it between 400-600 words.
     `;
 
-    const response = await ai.models.generateContent({
+    const response = await client.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: prompt,
     });
@@ -35,11 +44,12 @@ export const generateBlogContent = async (topic: string, tone: string = 'profess
 };
 
 export const generateMarketingIdea = async (businessType: string): Promise<string> => {
-   if (!apiKey) return "API Key missing.";
+   const client = getAiClient();
+   if (!client) return "API Key missing.";
    
    try {
      const prompt = `Provide 3 unique, high-impact digital marketing strategies for a "${businessType}" business. Keep it concise and actionable.`;
-     const response = await ai.models.generateContent({
+     const response = await client.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: prompt,
      });
