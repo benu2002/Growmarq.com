@@ -10,10 +10,6 @@ const Contact: React.FC = () => {
       setOpenFaqIndex(openFaqIndex === index ? null : index);
   }
 
-  // TODO: Replace this URL with your actual Google Form Embed URL
-  // Go to your Google Form -> Send -> Embed HTML (< >) -> Copy the src="..." URL
-  const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfD_YOUR_FORM_ID_HERE/viewform?embedded=true";
-
   return (
     <div className="pt-24 min-h-screen bg-brand-900 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,15 +44,15 @@ const Contact: React.FC = () => {
                             <p className="text-gray-400">70080 10914</p>
                         </div>
                     </a>
-                    <div className="flex items-start gap-4">
-                        <div className="bg-brand-500/10 p-3 rounded-lg text-brand-400">
+                    <a href="mailto:growmarq@gmail.com" className="flex items-start gap-4 group">
+                        <div className="bg-brand-500/10 p-3 rounded-lg text-brand-400 group-hover:bg-brand-500 group-hover:text-white transition-colors">
                             <Mail size={24} />
                         </div>
                         <div>
-                            <p className="text-white font-medium">Email</p>
+                            <p className="text-white font-medium group-hover:text-brand-400 transition-colors">Email</p>
                             <p className="text-gray-400">growmarq@gmail.com</p>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
             
@@ -71,31 +67,43 @@ const Contact: React.FC = () => {
             </div>
           </div>
 
-          {/* Google Form Embed */}
-          <div className="glass-panel p-4 rounded-2xl border border-white/5 overflow-hidden">
-             {/* 
-                INSTRUCTIONS FOR USER:
-                1. Create a Google Form.
-                2. Click "Send" -> Go to the Embed tab (< >).
-                3. Copy the URL inside the src="" attribute.
-                4. Replace the GOOGLE_FORM_URL variable at the top of this file or paste the link directly below in the iframe src.
-             */}
-             <div className="w-full bg-white rounded-lg h-[800px] overflow-hidden">
-                 <iframe 
-                    src={GOOGLE_FORM_URL} 
-                    width="100%" 
-                    height="100%" 
-                    frameBorder="0" 
-                    marginHeight={0} 
-                    marginWidth={0}
-                    title="Contact Form"
-                 >
-                    Loading…
-                 </iframe>
-             </div>
-             <p className="text-center text-xs text-gray-500 mt-2">
-                 *Please replace the iframe src in the code with your specific Google Form embed link.
-             </p>
+          {/* Contact Form */}
+          <div className="glass-panel p-8 rounded-2xl border border-white/5">
+              <h3 className="text-2xl font-bold text-white mb-6">Send us a Message</h3>
+              <form action="https://formsubmit.co/growmarq@gmail.com" method="POST" className="space-y-6">
+                  {/* Honeypot to prevent spam */}
+                  <input type="text" name="_honey" style={{ display: 'none' }} />
+                  
+                  {/* Disable Captcha for cleaner experience */}
+                  <input type="hidden" name="_captcha" value="false" />
+                  
+                  {/* Redirect after submission */}
+                  <input type="hidden" name="_next" value="https://growmarq.vercel.app/contact" />
+
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Name</label>
+                    <input type="text" name="name" required className="w-full px-4 py-3 rounded-lg bg-brand-800 border border-brand-700 text-white focus:outline-none focus:border-brand-500 transition-colors" placeholder="Your Name" />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                    <input type="email" name="email" required className="w-full px-4 py-3 rounded-lg bg-brand-800 border border-brand-700 text-white focus:outline-none focus:border-brand-500 transition-colors" placeholder="your@email.com" />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">Phone</label>
+                    <input type="tel" name="phone" className="w-full px-4 py-3 rounded-lg bg-brand-800 border border-brand-700 text-white focus:outline-none focus:border-brand-500 transition-colors" placeholder="+91 00000 00000" />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                    <textarea name="message" rows={4} required className="w-full px-4 py-3 rounded-lg bg-brand-800 border border-brand-700 text-white focus:outline-none focus:border-brand-500 transition-colors" placeholder="Tell us about your project..."></textarea>
+                  </div>
+                  
+                  <button type="submit" className="w-full py-4 rounded-lg bg-brand-500 hover:bg-brand-400 text-white font-bold text-lg transition-all shadow-lg shadow-brand-500/25">
+                    Send Message
+                  </button>
+              </form>
           </div>
         </div>
 
